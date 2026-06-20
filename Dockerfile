@@ -1,13 +1,23 @@
-FROM node:22-alpine
+FROM php:8.4-cli-alpine
 
-WORKDIR /app
+WORKDIR /var/www/html
 
-COPY package*.json ./
-RUN npm ci --omit=dev
+RUN apk add --no-cache $PHPIZE_DEPS bash git unzip \
+    && docker-php-ext-install pdo_mysql \
+    && apk del $PHPIZE_DEPS
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
+
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
 
 COPY . .
 
-ENV NODE_ENV=production
-EXPOSE 3000
+RUN composer dump-autoload --optimize \
+    && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views bootstrap/cache \
+    && chmod +x docker/entrypoint.sh \
+    && chmod -R 775 storage bootstrap/cache
 
-CMD ["npm", "start"]
+EXPOSE 8000
+
+CMD ["docker/entrypoint.sh"]

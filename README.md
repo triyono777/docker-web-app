@@ -1,6 +1,6 @@
-# Docker Notes Web App
+# Laravel Notes Docker App
 
-Contoh aplikasi web sederhana memakai Express, PostgreSQL, dan Docker Compose.
+Contoh aplikasi web sederhana memakai Laravel, MySQL, phpMyAdmin, dan Docker Compose.
 
 ## Jalankan
 
@@ -8,11 +8,17 @@ Contoh aplikasi web sederhana memakai Express, PostgreSQL, dan Docker Compose.
 docker compose up --build
 ```
 
-Buka:
+URL:
 
-```text
-http://localhost:3000
-```
+- Laravel app: http://localhost:8000
+- phpMyAdmin: http://localhost:8080
+
+Login phpMyAdmin:
+
+- Server: `mysql`
+- Username: `laravel_user`
+- Password: `laravel_pass`
+- Database: `laravel_notes`
 
 ## Hentikan
 
@@ -20,9 +26,15 @@ http://localhost:3000
 docker compose down
 ```
 
-Hapus data volume database:
+Hapus container sekaligus volume database:
 
 ```bash
 docker compose down -v
 ```
+
+## Service
+
+- `app` - Laravel di PHP 8.4, port `8000`
+- `mysql` - MySQL 8.4, volume `mysql_data`
+- `phpmyadmin` - phpMyAdmin, port `8080`
 
