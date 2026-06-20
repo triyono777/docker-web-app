@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docker Notes</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Express + PostgreSQL + Docker Compose</p>
+        <h1>Catatan Belajar Docker</h1>
+        <p class="lede">Simpan checklist praktikum ke database PostgreSQL yang berjalan di container terpisah.</p>
+      </div>
+      <div class="status-card" aria-label="Status service">
+        <span class="status-light" id="statusLight"></span>
+        <div>
+          <strong id="statusText">Memeriksa koneksi</strong>
+          <small>API: <code>/api/health</code></small>
+        </div>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Aplikasi catatan">
+      <form class="composer" id="noteForm">
+        <label for="title">Judul catatan</label>
+        <input id="title" name="title" maxlength="120" placeholder="Contoh: build image Docker" required>
+
+        <label for="detail">Detail</label>
+        <textarea id="detail" name="detail" maxlength="400" placeholder="Tulis langkah singkat atau hasil praktikum"></textarea>
+
+        <button type="submit">Tambah catatan</button>
+        <p class="form-message" id="formMessage" role="status"></p>
+      </form>
+
+      <div class="board">
+        <div class="board-head">
+          <div>
+            <p class="eyebrow">Database rows</p>
+            <h2>Daftar catatan</h2>
+          </div>
+          <button class="ghost" type="button" id="refreshButton">Refresh</button>
+        </div>
+
+        <div class="stats" aria-label="Ringkasan catatan">
+          <span><strong id="totalCount">0</strong> total</span>
+          <span><strong id="doneCount">0</strong> selesai</span>
+          <span><strong id="openCount">0</strong> aktif</span>
+        </div>
+
+        <div class="notes" id="notes"></div>
+      </div>
+    </section>
+  </main>
+
+  <template id="noteTemplate">
+    <article class="note">
+      <div class="note-main">
+        <label class="check-row">
+          <input type="checkbox">
+          <span class="note-title"></span>
+        </label>
+        <p class="note-detail"></p>
+        <small class="note-date"></small>
+      </div>
+      <button class="delete-button" type="button" aria-label="Hapus catatan">Hapus</button>
+    </article>
+  </template>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
+
